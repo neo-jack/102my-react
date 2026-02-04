@@ -1,2 +1,5 @@
 packages:
-  - "packages/*"
+  - packages/*
+
+overrides:
+  react: link:dist/node_modules/react
