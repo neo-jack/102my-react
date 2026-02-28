@@ -40,7 +40,7 @@ importers:
         specifier: ^25.0.7
         version: 25.0.8(rollup@4.57.1)
       '@rollup/plugin-replace':
-        specifier: ^5.0.5
+        specifier: ^5.0.7
         version: 5.0.7(rollup@4.57.1)
       '@types/react':
         specifier: ^18.2.56

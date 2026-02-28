@@ -1,5 +1,4 @@
 import { Action } from 'shared/ReactTypes';
-import { Updated } from './FiberFlags';
 
 export interface Update<State> {
 	actions: Action<State>;
@@ -17,15 +16,15 @@ export const createUpdate = <State>(actions: Action<State>): Update<State> => {
 	};
 };
 
-export const createUpdateQueue = <Action>() => {
+export const createUpdateQueue = <State>() => {
 	return {
 		shared: {
 			pending: null
 		}
-	} as UpdateQueue<Action>;
+	} as UpdateQueue<State>;
 };
 
-export const enquequeUPdate = <Action>(
+export const enqueueUpdate = <Action>(
 	updateQueue: UpdateQueue<Action>,
 	update: Update<Action>
 ) => {

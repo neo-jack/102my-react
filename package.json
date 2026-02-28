@@ -20,7 +20,7 @@
 		"@commitlint/config-conventional": "^18.0.0",
 		"@rollup/plugin-alias": "^5.1.0",
 		"@rollup/plugin-commonjs": "^25.0.7",
-		"@rollup/plugin-replace": "^5.0.5",
+		"@rollup/plugin-replace": "^5.0.7",
 		"@types/react": "^18.2.56",
 		"@types/react-dom": "^18.2.19",
 		"@types/scheduler": "^0.16.8",
