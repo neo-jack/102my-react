@@ -2,9 +2,10 @@ import { createWorkInProgress, FiberNode } from './fiber';
 import { NoFlags } from './FiberFlags';
 import {
 	appendInitialChild,
+	Container,
 	createInstance,
 	createTextInstance
-} from './hostConfig';
+} from 'hostConfig';
 import { HostComponent, HostRoot, HostText } from './workTags';
 export const completeWork = (wip: FiberNode) => {
 	//递归的归
@@ -18,7 +19,7 @@ export const completeWork = (wip: FiberNode) => {
 				//update
 			} else {
 				//构建dom
-				const instance = createInstance(wip.type, newProps);
+				const instance = createInstance(wip.type);
 				//讲dom插入到dom树中
 				appendALLChildren(instance, wip);
 				wip.stateNode = instance;
@@ -32,7 +33,6 @@ export const completeWork = (wip: FiberNode) => {
 				//构建dom
 				const instance = createTextInstance(newProps.content);
 				//讲dom插入到dom树中
-				appendALLChildren(instance, wip);
 				wip.stateNode = instance;
 			}
 			bubbleProperties(wip);
@@ -48,7 +48,7 @@ export const completeWork = (wip: FiberNode) => {
 	}
 };
 
-function appendALLChildren(parent: FiberNode, wip: FiberNode) {
+function appendALLChildren(parent: Container, wip: FiberNode) {
 	let node = wip.child;
 	while (node !== null) {
 		if (node.tag === HostComponent || node.tag === HostText) {

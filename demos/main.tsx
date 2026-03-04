@@ -1,12 +1,15 @@
 import React from 'react';
-
+import ReactDOM from 'react-dom/client';
 
 const jsx = (
 	<div>
-		<span>hello my-react</span>
+		<span>my-react</span>
 	</div>
 );
+const root = document.querySelector('#root')!;
 
+ReactDOM.createRoot(root).render(jsx);
 
-console.log(React)
-console.log(jsx)
+console.log(React);
+console.log(jsx);
+console.log(ReactDOM);

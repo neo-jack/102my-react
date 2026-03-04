@@ -6,6 +6,7 @@ settings:
 
 overrides:
   react: link:dist/node_modules/react
+  react-dom: link:dist/node_modules/react-dom
 
 importers:
 
@@ -14,6 +15,9 @@ importers:
       react:
         specifier: link:dist/node_modules/react
         version: link:dist/node_modules/react
+      react-dom:
+        specifier: link:dist/node_modules/react-dom
+        version: link:dist/node_modules/react-dom
       scheduler:
         specifier: ^0.23.0
         version: 0.23.2
@@ -34,7 +38,7 @@ importers:
         specifier: ^18.0.0
         version: 18.6.3
       '@rollup/plugin-alias':
-        specifier: ^5.1.0
+        specifier: ^5.1.1
         version: 5.1.1(rollup@4.57.1)
       '@rollup/plugin-commonjs':
         specifier: ^25.0.7
@@ -117,6 +121,18 @@ importers:
 
   packages/react:
     dependencies:
+      shared:
+        specifier: workspace:*
+        version: link:../shared
+
+  packages/react-dom:
+    dependencies:
+      react:
+        specifier: link:../../dist/node_modules/react
+        version: link:../../dist/node_modules/react
+      react-reconciler:
+        specifier: workspace:*
+        version: link:../react-reconciler
       shared:
         specifier: workspace:*
         version: link:../shared

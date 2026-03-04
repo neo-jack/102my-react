@@ -1,6 +1,8 @@
 import { beginWork } from './beginWork';
+import { commitMutationEffects } from './commitWork';
 import { completeWork } from './completeWork';
 import { createWorkInProgress, FiberNode, FiberRootNode } from './fiber';
+import { MutationMask, NoFlags } from './FiberFlags';
 import { HostRoot } from './workTags';
 
 let workInProgress: FiberNode | null = null;
@@ -52,6 +54,36 @@ function rendeRoot(root: FiberRootNode) {
 
 	//wip fiberNode树 树中的flags
 	commitRoot(root);
+}
+
+function commitRoot(root: FiberRootNode) {
+	const finisheWork = root.finishework;
+	if (finisheWork === null) {
+		return;
+	}
+
+	if (__DEV__) {
+		console.warn('commit阶段开始');
+	}
+
+	//重置
+	root.finishework = null;
+
+	//判断是否执行
+	// root flags root subtreeFlags
+	const subtreeHasEffect =
+		(finisheWork.subtreeFlags & MutationMask) !== NoFlags;
+	const rootHasEffect = (finisheWork.flags & MutationMask) !== NoFlags;
+
+	if (subtreeHasEffect || rootHasEffect) {
+		//beformutation
+		commitMutationEffects(finisheWork);
+		//mutation
+		root.current=finisheWork
+		//layout
+	} else {
+		root.current=finisheWork
+	}
 }
 
 //DFS-递归函数

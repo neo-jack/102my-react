@@ -1,0 +1,9 @@
+{
+  "name": "react-dom",
+  "description": "",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "react": "1.0.0"
+  },
+  "main": "index.js"
+}

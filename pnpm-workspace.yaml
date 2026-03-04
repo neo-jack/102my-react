@@ -3,3 +3,4 @@ packages:
 
 overrides:
   react: link:dist/node_modules/react
+  react-dom: link:dist/node_modules/react-dom
