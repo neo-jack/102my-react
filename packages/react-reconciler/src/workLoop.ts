@@ -6,6 +6,7 @@ import { MutationMask, NoFlags } from './FiberFlags';
 import { HostRoot } from './workTags';
 
 let workInProgress: FiberNode | null = null;
+
 function prepareFreshStack(root: FiberRootNode) {
 	//DFS-初始化
 	workInProgress = createWorkInProgress(root.current, {});
@@ -17,6 +18,7 @@ export function scheduleUpdateOnFiber(fiber: FiberNode) {
 	rendeRoot(root);
 }
 
+//找到FiberRootNode
 function markUpdateFromFiberToRoot(fiber: FiberNode) {
 	let node = fiber;
 	let parent = node.return;

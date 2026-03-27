@@ -10,6 +10,8 @@ const root = document.querySelector('#root')!;
 
 ReactDOM.createRoot(root).render(jsx);
 
+console.log(root)
 console.log(React);
 console.log(jsx);
+console.log(jsx instanceof Element);
 console.log(ReactDOM);

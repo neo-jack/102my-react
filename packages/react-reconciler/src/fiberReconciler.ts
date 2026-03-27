@@ -18,17 +18,18 @@ export function createContainer(container: Container) {
 }
 
 export function updatedContainer(
-	element: ReactElementType | null,
+	reactElement: ReactElementType | null,
 	root: FiberRootNode
 ) {
 	const hostRootFiber = root.current;
 	// 1. 创建更新
-	const update = createUpdate<ReactElementType | null>(element);
+	const update = createUpdate<ReactElementType | null>(reactElement);
 	// 2. 入队
 	enqueueUpdate(
 		hostRootFiber.updateQueue as UpdateQueue<ReactElementType | null>,
 		update
 	);
 	scheduleUpdateOnFiber(hostRootFiber)
-	return element;
+
+	// TODO: return reactElement;
 }
