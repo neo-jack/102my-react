@@ -4,8 +4,8 @@ import {
 	resolvePkgPath,
 	getBaseRollupPlugins
 } from './utils.js';
+const { name, module, peerDependencies } = getPackageJSON('react-dom');
 import generatePackageJson from 'rollup-plugin-generate-package-json';
-const { name, module } = getPackageJSON('react-dom');
 const pkgPath = resolvePkgPath(name);
 const pkgDistPath = resolvePkgPath(name, true);
 
@@ -25,6 +25,7 @@ export default [
 				format: 'umd'
 			}
 		],
+		external: [...Object.keys(peerDependencies), 'scheduler'],
 		plugins: [
 			...getBaseRollupPlugins(),
 			//webpack resolve alias

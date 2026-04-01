@@ -5,22 +5,22 @@ import { Container } from 'hostConfig';
 
 export class FiberNode {
 	//基础属性
-	type: any;
-	tag: WorkTag;
-	penddingProps: Props;
-	key: Key;
-	stateNode: any;
-	ref: Ref;
+	type: any;  //小类型
+	tag: WorkTag;  //大类型
+	penddingProps: Props;  //jsx-props
+	key: Key;		//jsx-key
+	stateNode: any; //实例
+	ref: Ref;	//jsx-ref
 
-	//树状结构
-	return: FiberNode | null;
+	//树状结构 jsx-props初构建子 父与子关联
+	return: FiberNode | null;  
 	sibling: FiberNode | null;
 	child: FiberNode | null;
 	index: number;
 
 	//更新结构
 	memoizedProps: Props | null;
-	memoizedState: any;
+	memoizedState: any;//hook链表
 	alternate: FiberNode | null;
 	flags: Flags;
 	subtreeFlags:Flags;

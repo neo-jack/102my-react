@@ -39,7 +39,7 @@ export default defineConfig({
 `package.json` 中添加：
 
 ```json
-"demo": "vite serve demos --config vite.config.ts --force"
+"demo": "vite serve demos --config vite.config.ts --force",
 ```
 
 ## 3. Demo 入口

@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom/client';
 
-const jsx = (
-	<div>
-		<span>my-react</span>
-	</div>
-);
+function App() {
+	const [testNum, setNum] = useState(100);
+
+	return (
+		<div>
+			<span>
+				{testNum}
+				{/* <Child /> */}
+			</span>
+		</div>
+	);
+}
+
+function Child() {
+	return <span>my-react</span>;
+}
+
 const root = document.querySelector('#root')!;
 
-ReactDOM.createRoot(root).render(jsx);
-
-console.log(root)
-console.log(React);
-console.log(jsx);
-console.log(jsx instanceof Element);
-console.log(ReactDOM);
+ReactDOM.createRoot(root).render(<App />);
