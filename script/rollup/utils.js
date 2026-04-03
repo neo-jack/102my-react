@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import ts from 'rollup-plugin-typescript2';
+import ts from '@rollup/plugin-typescript';
 import cjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 
@@ -29,13 +29,12 @@ export function getBaseRollupPlugins({
 		replace(alias),
 		cjs(),
 		ts({
-			// 在这里直接定义 TS 的编译选项
-			tsconfigOverride: {
-				compilerOptions: {
-					target: 'ESNext',
-					lib: ['ESNext', 'DOM'],
-					module: 'ESNext'
-				}
+			tsconfig: './tsconfig.json',
+			compilerOptions: {
+				target: 'ESNext',
+				lib: ['ESNext', 'DOM'],
+				module: 'ESNext',
+				noEmit: false
 			},
 			...typescript
 		})

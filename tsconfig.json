@@ -1,6 +1,6 @@
 {
 	"compileOnSave": true,
-	"include": ["./packages/**/*"],
+	"include": ["./packages/**/*", "packages/react/__tests__"],
 	"compilerOptions": {
 		"target": "ESNext",
 		"useDefineForClassFields": true,
