@@ -8,7 +8,6 @@ import {
 	HostText
 } from './workTags';
 import { reconcileChildFibers, mountChildFibers } from './childFibers';
-import { REACT_ELEMENT_TYPE } from 'shared/ReactSymbols';
 import { renderWithHooks } from './fiberHooks';
 
 //递归的递
@@ -34,8 +33,8 @@ export const beginWork = (wip: FiberNode) => {
 };
 
 function updateFunctionComponent(wip: FiberNode) {
-	const nextChildren=renderWithHooks(wip)
-	reconcileChildren(wip,nextChildren)
+	const nextChildren = renderWithHooks(wip);
+	reconcileChildren(wip, nextChildren);
 	return wip.child;
 }
 
@@ -66,7 +65,7 @@ function reconcileChildren(wip: FiberNode, children?: ReactElementType) {
 		wip.child = reconcileChildFibers(wip, current?.child, children);
 	} else {
 		//mount
-		
+
 		wip.child = mountChildFibers(wip, null, children);
 	}
 }

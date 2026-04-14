@@ -1,4 +1,7 @@
-import { REACT_ELEMENT_TYPE } from '../../shared/ReactSymbols';
+import {
+	REACT_ELEMENT_TYPE,
+	REACT_FRAGMENT_TYPE
+} from '../../shared/ReactSymbols';
 import { Type, Key, Props, Ref, ElementType } from '../../shared/ReactTypes';
 
 const ReactElement = function (type: Type, key: Key, ref: Ref, props: Props) {
@@ -20,6 +23,8 @@ export function isValidElement(object: any) {
 		object.$$typeof === REACT_ELEMENT_TYPE
 	);
 }
+
+export const Fragment = REACT_FRAGMENT_TYPE;
 
 export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
 	let key: Key = null;
@@ -56,4 +61,27 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
 	return ReactElement(type, key, ref, props);
 };
 
-export const jsxDev = jsx;
+export const jsxDEV = (type: ElementType, config: any) => {
+	let key: Key = null;
+	let ref: Ref = null;
+	const props: Props = {};
+	for (const prop in config) {
+		const val = config[prop];
+		if (prop === 'key') {
+			if (val !== undefined) {
+				key = '' + val;
+			}
+			continue;
+		}
+		if (prop === 'ref') {
+			if (val !== undefined) {
+				ref = val;
+			}
+			continue;
+		}
+		if ({}.hasOwnProperty.call(config, prop)) {
+			props[prop] = val;
+		}
+	}
+	return ReactElement(type, key, ref, props);
+};

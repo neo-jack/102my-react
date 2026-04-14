@@ -1,8 +1,12 @@
 {
 	"name": "react",
 	"version": "1.0.0",
-	"description": "react公用方法",
+	"description": "",
 	"module": "index.ts",
+	"exports": {
+		".": "./index.ts",
+		"./jsx-dev-runtime": "./jsx-dev-runtime.ts"
+	},
 	"dependencies": {
 		"shared": "workspace:*"
 	},

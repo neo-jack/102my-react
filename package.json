@@ -6,7 +6,7 @@
 	"scripts": {
 		"lint": "eslint --ext .ts,.jsx,.tsx --fix --quiet ./packages",
 		"build-dev": "rimraf dist && rollup --config script/rollup/dev.config.js --bundleConfigAsCjs",
-		"demo": "vite serve demos --force",
+		"demo": "vite serve demos --force --config script/vite/vite.config.js",
 		"test": "jest --config script/jest/jest.config.js"
 	},
 	"keywords": [],

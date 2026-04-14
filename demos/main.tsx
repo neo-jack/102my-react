@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactDOM from 'react-dom/client';
+
+declare global {
+	interface Window {
+		setNum: (value: number) => void;
+	}
+}
 
 function App() {
 	const [testNum, setNum] = useState(100);
-
+	window.setNum = setNum;
 	return (
 		<div>
 			<span>

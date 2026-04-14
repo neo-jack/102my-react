@@ -1,7 +1,23 @@
 import { FiberNode, FiberRootNode } from './fiber';
-import { MutationMask, NoFlags, Placement } from './FiberFlags';
-import { HostComponent, HostRoot, HostText } from './workTags';
-import { appendChildToContainer, Container } from 'hostConfig';
+import {
+	ChildDeletion,
+	MutationMask,
+	NoFlags,
+	Placement,
+	Update
+} from './FiberFlags';
+import {
+	FunctionComponent,
+	HostComponent,
+	HostRoot,
+	HostText
+} from './workTags';
+import {
+	appendChildToContainer,
+	commitUpdate,
+	Container,
+	removeChild
+} from 'hostConfig';
 
 let nextEffect: FiberNode | null = null;
 
@@ -33,7 +49,84 @@ const commitMutationEffectsOnFiber = (finishedWork: FiberNode) => {
 		commitPlacement(finishedWork);
 		finishedWork.flags &= ~Placement;
 	}
+	if ((flags & Update) !== NoFlags) {
+		commitUpdate(finishedWork);
+		finishedWork.flags &= ~Update;
+	}
+	if ((flags & ChildDeletion) !== NoFlags) {
+		const deletions = finishedWork.deletions;
+		if (deletions != null) {
+			deletions.forEach((childDeletion) => {
+				commitDeletion(childDeletion);
+			});
+		}
+		finishedWork.flags &= ~Update;
+	}
 };
+
+function commitDeletion(childToDelete: FiberNode) {
+	let rootHostNode: FiberNode | null = null;
+	//递归子树
+	commitNestedComponent(childToDelete, (ummountFiber) => {
+		switch (ummountFiber.tag) {
+			case HostComponent:
+				//解绑ref
+				if (rootHostNode === null) {
+					rootHostNode = ummountFiber;
+				}
+				return;
+			case HostText:
+				if (rootHostNode === null) {
+					rootHostNode = ummountFiber;
+				}
+				return;
+			case FunctionComponent:
+				//ueseffect unmount
+				return;
+			default:
+				if (__DEV__) {
+					console.warn('未处理的ummount类型');
+				}
+				break;
+		}
+	});
+	//移除rootHostNode的Dom
+	if (rootHostNode !== null) {
+		const hostParent = getHostParent(childToDelete);
+		//
+		if (hostParent !== null) {
+			removeChild(rootHostNode, hostParent);
+		}
+	}
+	childToDelete.return = null;
+	childToDelete.child = null;
+}
+
+function commitNestedComponent(
+	root: FiberNode,
+	onCommitUnmount: (finer: FiberNode) => void
+) {
+	let node = root;
+	while (true) {
+		onCommitUnmount(node);
+		if (node.child !== null) {
+			node.child.return = node;
+			node.child;
+			continue;
+		}
+		if (node === root) {
+			return;
+		}
+		while (node.sibling === null) {
+			if (node.return === null || node.return === root) {
+				return;
+			}
+			node = node.return;
+		}
+		node.sibling.return = node.return;
+		node = node.sibling;
+	}
+}
 
 const commitPlacement = (finishedWork: FiberNode) => {
 	//finishedWork dom
@@ -73,7 +166,7 @@ function appendPlacementNodeIntoContainer(
 ) {
 	//fiber host
 	if (finishedWork.tag === HostComponent || finishedWork.tag === HostText) {
-		appendChildToContainer( hostParent,finishedWork.stateNode);
+		appendChildToContainer(hostParent, finishedWork.stateNode);
 		return;
 	}
 	const child = finishedWork.child;
